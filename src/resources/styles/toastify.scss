@@ -1,0 +1,40 @@
+.Toastify__toast {
+  min-height: 50px;
+
+  &-container {
+    width: 372px;
+  }
+
+  &--default {
+    @include flex($ai: center);
+    @include font($fs: 14px, $c: black);
+    box-shadow: none;
+    background: $c-background;
+    border: 1px solid $c-brand;
+    border-radius: 4px;
+    position: relative;
+    padding: 16px;
+    max-width: 372px;
+
+    &:after {
+      @include absolute($b: 0, $l: 0, $r: 0);
+      height: 2px;
+      content: '';
+      background: $c-brand;
+    }
+  }
+
+  &-body {
+    margin: 0;
+    padding: 0 10px 0 0;
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.Toastify__progress-bar {
+  height: 2px;
+  background: $c-background;
+}

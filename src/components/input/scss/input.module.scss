@@ -1,0 +1,82 @@
+.input {
+  @include flex($jc: center, $ai: center);
+  background-color: $c-background;
+  width: 100%;
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: 1px solid $c-grey;
+  color: black;
+
+  &__field{
+    margin-bottom: 16px;
+  }
+
+  &--wide {
+    width: 100%;
+  }
+
+  &--mb-0 {
+    margin-bottom: 0px;
+  }
+
+  &__title {
+    margin-bottom: 5px;
+
+    &--small {
+      font-size: 14px;
+    }
+
+    &--disabled {
+      color: $c-grey;
+    }
+  }
+
+  &--disabled {
+    color: $c-grey;
+    background-color: $c-background;
+    cursor: not-allowed;
+  }
+
+  &__block {
+    margin-bottom: 24px;
+  }
+
+  &__inputs {
+    .input{
+      margin-bottom: 16px;
+    }
+  }
+
+  &__checkbox {
+    justify-content: flex-start;
+    width: 100%;
+
+    input[type='checkbox'] {
+      position: absolute;
+      z-index: 2;
+      opacity: 0;
+    }
+
+    input[type='checkbox'] + label::before {
+      vertical-align: middle;
+      content: '';
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      flex-shrink: 0;
+      flex-grow: 0;
+      border-radius: 0.25em;
+      margin-right: 0.5em;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 50% 50%;
+      border: 1px solid $c-grey;
+      transition: 0.1s all;
+    }
+    input[type='checkbox']:checked + label::before {
+      border-color: $c-brand;
+      background-color: $c-brand;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+    }
+  }
+}

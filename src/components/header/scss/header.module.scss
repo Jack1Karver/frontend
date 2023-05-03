@@ -1,27 +1,49 @@
 .header {
-  padding: 32px 0px;
-  width: 100%;
   @include flex($ai: center, $jc: center);
   @include fixed();
+  padding: 16px 0;
   background-color: $c-white;
-  color: $c-brand;
+  width: 100%;
+
   z-index: 100;
 
   &__content {
-    max-width: 990px;
-    @include fixed();
+    @include media-xs {
+      width: 550px;
+      padding: 0 5px;
+    }
+
+    @include media-sm {
+      width: 730px;
+      padding: 0 15px;
+    }
+
+    @include media-md {
+      //upd
+      width: 850px;
+    }
+
+    @include media-lg {
+      width: 1130px;
+    }
+
+    @include media-xl {
+      width: 1300px;
+    }
+
+    @include media-xxl {
+      width: 1510px;
+    }
+
     @include flex();
-    width: 100%
+    width: 1212px;
   }
 
   &__logo {
-    @include flex($ai: center, $jc: space-around);
-    width: 65px;
-    height: 55px;
-
-    svg {
-    transform: scale(10%);
-      overflow: visible;
+    @include font($ff: $f-main, $fs: 16px);
+    color: $c-brand;
+    h3{
+      margin-bottom: 0px;
     }
   }
 
@@ -37,12 +59,12 @@
       border-radius: 50%;
     }
   }
-  &__login{
+  &__login {
     margin-left: 16px;
-    @include flex()
+    @include flex();
   }
 
-  &__user{
+  &__user {
     margin-right: 24px;
   }
 }

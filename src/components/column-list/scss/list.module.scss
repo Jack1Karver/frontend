@@ -1,0 +1,12 @@
+.list{
+    column-count: 5;
+    padding-left: 0;
+    gap: 4px;
+
+    &__item{
+        @include font($fs: 18px);
+        margin-bottom: 8px;
+    }
+
+
+}

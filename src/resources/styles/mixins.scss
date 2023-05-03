@@ -1,0 +1,133 @@
+@mixin font($ff: null, $fs: null, $lh: null, $fw: null, $fy: null, $c: null, $ls: null) {
+  font-family: $ff;
+  font-size: $fs;
+  line-height: $lh;
+  font-weight: $fw;
+  font-style: $fy;
+  color: $c;
+  letter-spacing: $ls;
+}
+
+@mixin position($position, $t: null, $l: null, $r: null, $b: null, $z: null) {
+  position: $position;
+  top: $t;
+  left: $l;
+  right: $r;
+  bottom: $b;
+  z-index: $z;
+}
+
+
+@mixin absolute($args...) {
+  @include position(absolute, $args...);
+}
+
+@mixin relative($args...) {
+  @include position(relative, $args...);
+}
+
+@mixin fixed($args...) {
+  @include position(fixed, $args...);
+}
+
+@mixin flex($fd: null, $fw: null, $ai: center, $jc: flex-start, $fs: null, $fg: null) {
+  display: flex;
+  flex-direction: $fd;
+  flex-wrap: $fw;
+  align-items: $ai;
+  justify-content: $jc;
+  flex-shrink: $fs;
+  flex-grow: $fg;
+}
+
+@mixin list-reset {
+  padding-left: 0;
+  list-style: none;
+}
+
+@mixin media-xs {
+  @media (min-width: #{$v-xs}) {
+    @content;
+  }
+}
+
+@mixin media-sm {
+  @media (min-width: #{$v-sm}) {
+    @content;
+  }
+}
+
+@mixin media-md {
+  @media (min-width: #{$v-md}) {
+    @content;
+  }
+}
+
+@mixin media-lg {
+  @media (min-width: #{$v-lg}) {
+    @content;
+  }
+}
+
+@mixin media-xl {
+  @media (min-width: #{$v-xl}) {
+    @content;
+  }
+}
+
+@mixin media-xxl {
+  @media (min-width: #{$v-xxl}) {
+    @content;
+  }
+}
+
+@mixin media($size) {
+  @media (min-width: ($size+'px')) {
+    @content;
+  }
+}
+
+@mixin text {
+  @include font($ff: $f-secondary, $fs: 14px, $lh: 1.6, $fw: 400);
+}
+
+@mixin h4style {
+  @include font($ff: $f-secondary, $fs: 20px, $lh: 1.4, $ls: -0.01em, $fw: 500);
+
+  @include media-sm {
+    @include font($fs: 22px);
+  }
+}
+
+@mixin outline {
+  &:focus {
+    outline: none;
+    box-shadow: $o-std;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: $o-std;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  // IE 10-11 doesn't support @media hover
+  @include ie-support {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin ie-support {
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    @content;
+  }
+}

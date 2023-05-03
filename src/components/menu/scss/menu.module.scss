@@ -1,0 +1,13 @@
+.menu{
+
+    @include flex($ai: center, );
+    @include list-reset();
+    width: 100%;
+
+    &__item{
+    padding: 0 16px;
+    :hover {
+      cursor: pointer;
+    }
+  }
+}

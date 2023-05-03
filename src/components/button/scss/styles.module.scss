@@ -1,0 +1,50 @@
+.button {
+  @include flex($jc: center, $ai: center);
+  @include font($fs: 15px);
+  background-color: $c-background;
+  width: 100%;
+  padding: 10px 5px;
+  border-radius: 3px;
+  border: none;
+
+  color: $c-black;
+  cursor: pointer;
+
+  &--blue {
+    background-color: $c-brand;
+    color: $c-white;
+  }
+
+  &--empty {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    color: $c-brand;
+    transition: 0.2s ease background-color;
+
+    &:hover {
+      background-color: $c-background;
+    }
+  }
+  &--wide{
+    width:300px
+  }
+
+  &--md {
+    height: 36px;
+    width: 220px;
+  }
+
+  &--sm{
+    height: 36px;
+    width: 100px;
+  }
+
+  &--xs {
+    height: 32px;
+    width: auto;
+  }
+
+  &--noBorder{
+    border: none
+  }
+}
