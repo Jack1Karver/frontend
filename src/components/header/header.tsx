@@ -4,9 +4,11 @@ import { observer } from 'mobx-react';
 import { COMMON_LABELS } from '@/config/labels.config';
 import  Router  from 'next/router';
 import Button from '../button/button';
+import userStore from '@/stores/user-store';
 
 const Header = observer(() => {
-
+  const {user} = userStore
+  console.log(user);
 
   return (
     <header className={styles.header}>

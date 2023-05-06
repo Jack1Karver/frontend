@@ -5,11 +5,13 @@ import { TFields } from "@/interfaces/common";
 export class RequestParams {
   method: HttpMethods;
   url: string;
-  data?: any;
+  headers: TFields = {};
+  data?: FormData | string | null;
 
-  constructor(method: HttpMethods, endpoint: string, ) {
+  constructor(method: HttpMethods, endpoint: string, headers: TFields = {}) {
     this.method = method;
     this.url = endpoint;
+    this.headers = headers;
   }
 
   toMultipart(data: TFields): FormData {

@@ -89,7 +89,4 @@ class UserStore {
 }
 
 export default new UserStore();
-function fetchUserBalance(): any {
-  throw new Error('Function not implemented.');
-}
 
