@@ -22,9 +22,7 @@ export const COMMON_LABELS = {
 };
 
  export const WALLET_LABELS = {
-  accountInactiveTitle: { en: 'Account is not active', ru: 'Счет неактивен' },
-  accountInactiveDesc: {
-    en: 'Make sure your Everscale account is deployed and active.',
-    ru: 'Убедитесь, что ваша учетная запись Everscale развернута и активна.',
-  },
+  accountInactiveTitle: 'Account is not active',
+  accountInactiveDesc:'Make sure your Everscale account is deployed and active.',
+  canceled:'Canceled by user.',
  }

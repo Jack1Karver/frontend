@@ -1,0 +1,7 @@
+.create{
+    @include flex($jc: center);
+
+    &__form{
+        width: 340px;
+    }
+}

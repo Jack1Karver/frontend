@@ -1,6 +1,6 @@
 import BlockHead from '@/components/block/block-head';
 import ListColumns from '@/components/column-list/list';
-import { IMark } from '@/models';
+import { IMark } from '@/interfaces/mark-interface';
 import { CarRequests } from '@/requests/car.requests';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -22,10 +22,11 @@ const PopularMarks = () => {
     <BlockHead title={'Choose mark'}/>
     <ListColumns
       items={
-        marks?.map(mark => {
+        marks ? 
+        marks.map(mark => {
           return <Link href={'/car/ford/all'}>{mark.name}</Link>;
-        return <span>{mark.name}</span>
         })
+        : []
       }
     />
     </div>

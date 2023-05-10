@@ -6,7 +6,6 @@ import { IApiResponse } from '@/interfaces/api-response.interface';
 export class ExtensionWalletAuthRequests {
   static async getUserNonce(address: string): Promise<IApiResponse> {
     const res =  await apiClient.send(HttpMethods.GET, `/user/nonce/${address}`);
-    console.log(res)
     return res
   }
 

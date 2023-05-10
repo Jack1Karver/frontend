@@ -5,10 +5,10 @@ import { COMMON_LABELS } from '@/config/labels.config';
 import  Router  from 'next/router';
 import Button from '../button/button';
 import userStore from '@/stores/user-store';
+import Menu from '../menu/menu';
 
 const Header = observer(() => {
   const {user} = userStore
-  console.log(user);
 
   return (
     <header className={styles.header}>
@@ -17,7 +17,7 @@ const Header = observer(() => {
             <h3>Drivefy</h3>
         </Link>
         <div className={styles.header__menu}>
-          {/* <Menu user={userAuthorized}/> */}
+          <Menu/>
         </div>
         <div className={styles.header__login}>
           {/* {userAuthorized ? (
@@ -30,7 +30,8 @@ const Header = observer(() => {
           ) : (
            
           )} */}
-           <Button size={'sm'} onClick={() => Router.push('/signin')} content={COMMON_LABELS.login} />
+          {!user ? <Button size={'sm'} onClick={() => Router.push('/signin')} content={COMMON_LABELS.login} /> : <span className={styles.header__user}>{user.name}</span>}
+          
         </div>
       </div>
     </header>

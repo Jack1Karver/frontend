@@ -50,7 +50,7 @@ h4,
 }
 
 h5 {
-  @include font($ff: $f-main, $fs: 15px, $lh: 25px);
+  @include font($ff: $f-secondary, $fs: 15px, $lh: 25px);
 }
 
 h6 {

@@ -10,7 +10,7 @@
   color: $c-black;
   cursor: pointer;
 
-  &--blue {
+  &--brand {
     background-color: $c-brand;
     color: $c-white;
   }
@@ -31,7 +31,7 @@
 
   &--md {
     height: 36px;
-    width: 220px;
+    width: 160px;
   }
 
   &--sm{

@@ -2,7 +2,7 @@ import { MouseEventHandler } from 'react';
 import styles from './scss/styles.module.scss';
 
 type ButtonProps = {
-  mod?: 'blue' | 'grey' | 'empty';
+  mod?: 'brand' | 'grey' | 'empty';
   size?: 'wide' | 'md' | 'xs' | 'sm';
   content: string;
   onClick?: MouseEventHandler;
