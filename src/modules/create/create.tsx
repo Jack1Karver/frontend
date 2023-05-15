@@ -1,7 +1,7 @@
 import Block from '@/components/block/block';
 import Select from '@/components/select/select';
 import { CarRequests } from '@/requests/car.requests';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import styles from './scss/create.module.scss';
 import BlockHead from '@/components/block/block-head';
@@ -12,10 +12,15 @@ import { IModel } from '@/interfaces/model.interface';
 import { engineType } from '@/config/enums/engine-type';
 import { driveType } from '@/config/enums/drive-type';
 import { gearboxType } from '@/config/enums/gearbox-type';
+import Button from '@/components/button/button';
+import FileInputToken from '@/components/file-input/file-input-token';
+import userStore from '@/stores/user-store';
+import { FILE_EXTENSIONS } from '@/config/files.config';
 
 const Create = observer(() => {
   const [marks, setMarks] = useState<string[]>([]);
   const [models, setModels] = useState<IModel[]>([]);
+  const user = userStore
 
   const [createStore] = useState(() => new CreateStore());
 
@@ -28,11 +33,11 @@ const Create = observer(() => {
   };
 
   const getYears = () => {
-    const model = models.find(model => createStore.model === model.name);
-    const array = Array((model?.year_to ?? new Date().getFullYear()) - model!.year_from)
+
+    const array = Array((createStore.model?.year_to ?? new Date().getFullYear()) - createStore.model!.year_from)
       .fill(' ')
       .map((val, index) => {
-        return model!.year_from + index;
+        return createStore.model!.year_from + index;
       })
       .reverse();
     return array;
@@ -64,7 +69,7 @@ const Create = observer(() => {
             <Select
               options={models.map(model => model.name)}
               placeholder={'Select model'}
-              onSelect={model => createStore.setModel(model as string)}
+              onSelect={val => {createStore.setModel(models.find(model=>model.name === val) ?? null)}}
               title={'Model'}
             />
           ) : (
@@ -72,6 +77,11 @@ const Create = observer(() => {
           )}
           {createStore.model ? (
             <>
+             <FileInputToken
+              id={'file_input'}
+              setFiles={(files)=> createStore.setFiles(files)}
+              extensions={FILE_EXTENSIONS.image}
+              />
               <Select
                 options={getYears()}
                 placeholder={'Year'}
@@ -96,10 +106,13 @@ const Create = observer(() => {
                 onSelect={type => createStore.setGearboxType(type as string)}
                 title={'Gear box type'}
               />
-              <Input type={'number'} title={'Horsepower'} onChange={val => createStore.setHp(val)} />
-              <Input type={'number'} title={'Engine capacity'} onChange={val => createStore.setEngineCapacity(val)} />
-              <Input type={'text'} title={'Color'} onChange={val => createStore.setColor(val)} />
-              <Input type={'number'} title={'Mileage'} onChange={val => createStore.setMileage(val)} />
+              <Input type={'number'} title={'Horsepower'} onChange={e => createStore.setHp(e.target.value)} />
+              <Input type={'number'} title={'Engine capacity'} onChange={e => createStore.setEngineCapacity(e.target.value)} />
+              <Input type={'text'} title={'Color'} onChange={e => createStore.setColor(e.target.value)} />
+              <Input type={'number'} title={'Mileage'} onChange={e => createStore.setMileage(e.target.value)} />
+              <Input type={'textarea'} title={'Description'} onChange={e => createStore.setDescription(e.target.value)} />
+              <Input type={'number'} title={'Price'} onChange={e => createStore.setPrice(e.target.value)} />
+              <Button className={styles.create__button} content={'Create offer'} mod={'brand'} onClick={()=>createStore.createPrototype()} />
             </>
           ) : (
             ''

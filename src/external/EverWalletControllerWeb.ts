@@ -6,6 +6,7 @@ import { AbstractContractsControllerWeb } from './AbstractContractsControllerWeb
 import EverWalletClient from '@/utils/wallet/EverWalletClient';
 import { ICar } from '@/interfaces/car.interface';
 import { IOffer } from '@/interfaces/offer.interface';
+import { ROOTS } from '@/config/ton.config';
 
 export default class EverWalletControllerWeb extends AbstractContractsControllerWeb {
   readonly ewClient: EverWalletClient;
@@ -27,18 +28,20 @@ export default class EverWalletControllerWeb extends AbstractContractsController
 
       const transactionRes = await this.provider.sendMessage({
         sender: new Address(userAddress),
-        recipient: new Address(collection.nftRoot.address),
+        recipient: new Address(ROOTS.nftRoot.address),
         amount: toNano(MARKETPLACE.mintingFeeTip4).toString(),
         bounce: true,
         payload: {
-          abi: collection.nftRoot.rootAbi,
+          abi: ROOTS.nftRoot.abi,
           method: 'mint',
           params: {
             json,
-            royalty: [[userAddress, royalty]],
+            royalty: [[userAddress, 0]],
           },
         },
       });
+
+      console.log(transactionRes)
 
       return { data: { message: transactionRes?.transaction?.inMessage?.hash } };
     } catch (e) {
@@ -49,22 +52,21 @@ export default class EverWalletControllerWeb extends AbstractContractsController
 
   async sellToken(car: ICar, price: number): Promise<IExtensionResponse> {
     try {
-      const itemAccount = await this.contractsService.getTip4DataAccount(car.address, getDataAbiFromItem(car));
+      const itemAccount = await this.contractsService.getTip4DataAccount(car.address, ROOTS.data.abi);
       const userAddress = await this.getUserAddress();
       const itemAddress = await itemAccount.getAddress();
-      const sellRoot = getSellRootFromItem(car);
-      const sellContract = await this.contractsService.getTip4SellRootAccount(sellRoot.address, sellRoot.rootAbi);
-      const sellPayload = await sellContract.generatePayload(price, car.collection.nftRoot.address);
+      const sellContract = await this.contractsService.getTip4SellRootAccount(ROOTS.sellRoot.address, ROOTS.sellRoot.abi);
+      const sellPayload = await sellContract.generatePayload(price, ROOTS.nftRoot.address);
 
       const payload = {
         abi: JSON.stringify(itemAccount.abi),
         method: 'changeManager',
         params: {
-          newManager: sellRoot.address,
+          newManager: ROOTS.sellRoot.address,
           sendGasTo: userAddress,
           callbacks: [
             [
-              sellRoot.address,
+              ROOTS.sellRoot.address,
               {
                 value: toNano(MARKETPLACE.offerCreationFee).toString(),
                 payload: sellPayload,

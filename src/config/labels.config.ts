@@ -21,8 +21,12 @@ export const COMMON_LABELS = {
   wrongFormat: 'Неправильный формат',
 };
 
- export const WALLET_LABELS = {
+export const WALLET_LABELS = {
   accountInactiveTitle: 'Account is not active',
-  accountInactiveDesc:'Make sure your Everscale account is deployed and active.',
-  canceled:'Canceled by user.',
- }
+  accountInactiveDesc: 'Make sure your Everscale account is deployed and active.',
+  canceled: 'Canceled by user.',
+};
+
+export const FILE_SIZE_ERROR = 'Maximum file size exceeded!';
+
+export const FILE_EXTENSION_ERROR = 'Invalid file extension!';

@@ -6,6 +6,7 @@
   padding: 10px 5px;
   border-radius: 3px;
   border: none;
+  transition: 0.2s ease-in-out background-color;
 
   color: $c-black;
   cursor: pointer;
@@ -13,13 +14,16 @@
   &--brand {
     background-color: $c-brand;
     color: $c-white;
+
+    &:hover{
+      background-color: $c-brand-dark;
+    }
   }
 
   &--empty {
     background-color: rgba(0, 0, 0, 0);
     border: none;
     color: $c-brand;
-    transition: 0.2s ease background-color;
 
     &:hover {
       background-color: $c-background;
@@ -40,8 +44,12 @@
   }
 
   &--xs {
-    height: 32px;
-    width: auto;
+    height: 24px;
+    width: 24px;
+    svg{
+      width: 16px;
+      height: 16px
+    }
   }
 
   &--noBorder{

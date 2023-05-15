@@ -13,7 +13,6 @@ export class Tip4SellRootAccount extends AbstractSellRootAccount {
       await this.account.runLocal('generatePayload', {
         answerId: 0,
         price: toNano(price),
-        collection,
       })
     )?.decoded?.output.payload;
   }

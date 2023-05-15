@@ -1,6 +1,5 @@
-import { HttpMethods } from "@/config/enums/http-methods.enum";
-import { TFields } from "@/interfaces/common";
-
+import { HttpMethods } from '@/config/enums/http-methods.enum';
+import { TFields } from '@/interfaces/common';
 
 export class RequestParams {
   method: HttpMethods;
@@ -18,8 +17,18 @@ export class RequestParams {
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
-      if (typeof value === 'string' || value instanceof Blob) {
-        formData.append(key, value);
+      if (
+        typeof value === 'string' ||
+        value instanceof Blob ||
+        (value instanceof Array && value.length)
+      ) {
+        if (value instanceof Array) {
+          value.forEach(file => {
+            formData.append(key, file);
+          });
+        } else {
+          formData.append(key, value);
+        }
       }
     });
 

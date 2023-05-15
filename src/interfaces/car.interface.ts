@@ -9,28 +9,35 @@ import { IModel } from './model.interface';
 export interface ISimpleCar {
   id: string;
   files: string[];
-  address?: string;
-  car_features: ICarFeatures
+  address: string;
+  carFeatures: ICarFeatures;
 }
 
-export interface ICar extends ISimpleCar{
+export interface ICar extends ISimpleCar {
   owner: IUser;
   description: string;
   dateCreated: Date;
   status: string;
   jsonHash: string;
   offer: IOffer;
-  price: number;
 }
 
-export interface ICarFeatures extends ISimpleCar {
+export interface ICarFeatures {
   model: IModel;
-  year_prod: number;
-  engine_type: engineType;
-  drive_type: driveType;
-  gearbox_type: gearboxType;
+  yearProd: number;
+  engineType: engineType;
+  driveType: driveType;
+  gearboxType: gearboxType;
   hp: number;
-  engine_capacity: number;
+  engineCapacity: number;
   color: string;
   mileage: number;
+}
+
+export interface ICarPrototype {
+  id?: string;
+  owner: IUser;
+  carFeatures: ICarFeatures;
+  description: string;
+  files?: File[];
 }
