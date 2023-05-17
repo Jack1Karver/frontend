@@ -35,4 +35,8 @@ export class CarRequests {
 
     return res.data as ICarPrototype;
   };
+
+  static async deletePrototype(id: string){
+    await apiClient.send(HttpMethods.DELETE, `/cars/delete/?id=${id}`)
+  }
 }

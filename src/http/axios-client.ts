@@ -32,7 +32,6 @@ export class AxiosClient {
 
     const requestParams = new RequestParams(method, this.apiUrl + endpoint, headers);
     requestParams.data = requestParams.toMultipart(data);
-    console.log(requestParams.data)
 
     return this.__send(requestParams.get());
   }

@@ -66,31 +66,4 @@ export const u32 = (x: string | number | bigint | boolean) => u(32, x);
 export const u128 = (x: string | number | bigint | boolean) => u(128, x);
 export const u256 = (x: string | number | bigint | boolean) => u(256, x);
 
-export const dynamicImportExtensionService = async (
-  walletType: 'everwallet'
-) =>
-  Promise.resolve()
-    .then(function () {
-      return import('@/external/WalletExtensionService');
-    })
-    .then(function (walletExtService) {
-      return new walletExtService.WalletExtensionService();
-    });
 
-export const dynamicImportContractsService = async () =>
-  Promise.resolve()
-    .then(function () {
-      return import('@/external/ContractsService');
-    })
-    .then(function (contractsService) {
-      return new contractsService.default();
-    });
-
-export const dynamicImportWalletsService = async () =>
-  Promise.resolve()
-    .then(function () {
-      return import('@/external/WalletTransactionService');
-    })
-    .then(function (contractsService) {
-      return new contractsService.WalletTransactionService();
-    });

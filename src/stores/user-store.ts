@@ -1,7 +1,6 @@
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import { fetchAuthorizeUser } from '@/requests/user-requests';
 import { IAuthorizedUser } from '@/interfaces/user.interface';
-import socketClient from '@/http/socket-client';
 
 
 class UserStore {
@@ -22,25 +21,7 @@ class UserStore {
 
     this.setInitialUser();
 
-    if (this.user) {
-      this.subscribeWsEvents();
-    } else {
-      reaction(
-        () => this.initialFetching,
-        () => {
-          this.user && this.subscribeWsEvents();
-        }
-      );
-    }
   }
-
-  subscribeWsEvents = () => {
-    socketClient.on('user.updated', (payload: { userId: string; gbCollector: boolean }) => {
-      if (this.user?.id.toString() === payload.userId) {
-        this.setUser({ ...this.user, gbCollector: payload.gbCollector });
-      }
-    });
-  };
 
   setInitialUser = async () => {
     const user = await fetchAuthorizeUser();

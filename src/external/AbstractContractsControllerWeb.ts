@@ -46,13 +46,13 @@ export abstract class AbstractContractsControllerWeb implements IContractsContro
     });
   }
 
-  abstract mintTip4Token({
-    json,
-    royalty,
+  abstract mintToken({
+    name,
+    url,
   }: {
-    json: string;
-    royalty: number;
-  }): Promise<IExtensionResponse>;
+    name: string;
+    url: string;
+  }): Promise<IExtensionResponse>
 
 
   abstract sellToken(car: ICar, price: number): Promise<IExtensionResponse>;

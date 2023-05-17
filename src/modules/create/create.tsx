@@ -16,6 +16,7 @@ import Button from '@/components/button/button';
 import FileInputToken from '@/components/file-input/file-input-token';
 import userStore from '@/stores/user-store';
 import { FILE_EXTENSIONS } from '@/config/files.config';
+import { notify } from '@/utils/common.utils';
 
 const Create = observer(() => {
   const [marks, setMarks] = useState<string[]>([]);
@@ -31,6 +32,19 @@ const Create = observer(() => {
       })
     );
   };
+
+  const mint = async ()=>{
+    const result = await createStore.mint();
+
+    if (result.error) {
+        notify(result.error);
+        await createStore.deletePrototype();
+    }
+
+    await sendTransaction();
+  }
+
+  const sendTransaction = async () => createStore.sendMintTransaction();
 
   const getYears = () => {
 
@@ -112,7 +126,7 @@ const Create = observer(() => {
               <Input type={'number'} title={'Mileage'} onChange={e => createStore.setMileage(e.target.value)} />
               <Input type={'textarea'} title={'Description'} onChange={e => createStore.setDescription(e.target.value)} />
               <Input type={'number'} title={'Price'} onChange={e => createStore.setPrice(e.target.value)} />
-              <Button className={styles.create__button} content={'Create offer'} mod={'brand'} onClick={()=>createStore.createPrototype()} />
+              <Button className={styles.create__button} content={'Create offer'} mod={'brand'} onClick={mint} />
             </>
           ) : (
             ''

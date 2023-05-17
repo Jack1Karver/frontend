@@ -1,12 +1,14 @@
 import { driveType } from '@/config/enums/drive-type';
 import { engineType } from '@/config/enums/engine-type';
 import { gearboxType } from '@/config/enums/gearbox-type';
+import EverWalletControllerWeb from '@/external/EverWalletControllerWeb';
 import { ICarPrototype } from '@/interfaces/car.interface';
 import { IFileInput } from '@/interfaces/file-input.interface';
 import { IModel } from '@/interfaces/model.interface';
 import { CarRequests } from '@/requests/car.requests';
 import { removeEmptyParams, removeParagraphs } from '@/utils/common.utils';
 import { getFileMeta } from '@/utils/files.utils';
+import { getEverWalletClient } from '@/utils/wallet/client';
 import { prototype } from 'events';
 import { action, makeObservable, observable } from 'mobx';
 
@@ -24,6 +26,8 @@ export default class CreateStore {
   price: number | null = null;
   files: IFileInput[] = [];
   carPrototype: ICarPrototype | null = null;
+  json: string = '';
+  mintTransactionError: string | null = null;
 
   constructor() {
     makeObservable(this, {
@@ -103,12 +107,30 @@ export default class CreateStore {
     this.files = files;
   }
 
-  setCarPrototype(carPrototype: ICarPrototype){
-    this.carPrototype = carPrototype
+  setCarPrototype(carPrototype: ICarPrototype) {
+    this.carPrototype = carPrototype;
+  }
+
+  setJson(json: string) {
+    this.json = json;
   }
 
   async mint() {
-    const prototype = await this.createPrototype();
+    await this.createPrototype();
+
+    if (!this.carPrototype) {
+      return { error: 'Item creation failed.', status: 'ERROR' };
+    }
+
+    const json = await this.uploadFiles();
+
+
+    if (!json) {
+      await this.deletePrototype();
+      return { error: 'Item creation failed.', status: 'ERROR' };
+    }
+
+    return {status: 'OK'}
   }
 
   async createPrototype() {
@@ -131,10 +153,7 @@ export default class CreateStore {
       if (!carPrototype) {
         return { error: 'Item creation failed.', status: 'ERROR' };
       }
-      this.carPrototype = carPrototype;
-      console.log(this.carPrototype);
-
-      const json = await this.uploadFiles();
+      this.setCarPrototype(carPrototype);
     }
   }
 
@@ -146,18 +165,59 @@ export default class CreateStore {
       return getFileMeta(file.file, file.src);
     });
 
-    console.log(this.carPrototype.id);
-
     const uploadFileFields = {
       carId: JSON.stringify(this.carPrototype.id),
       files: this.files.map(file => file.file),
       fileMeta: JSON.stringify(fileMetas),
     };
 
-    console.log(uploadFileFields);
-
     const carProtoWithFiles = await CarRequests.uploadFile(removeEmptyParams(uploadFileFields));
+
+    if (!carProtoWithFiles.json) {
+      this.deletePrototype();
+
+      return null;
+    }
+    this.setJson(carProtoWithFiles.json);
+    this.setCarPrototype(carProtoWithFiles);
+
+    return carProtoWithFiles.json;
   }
+
+  async deletePrototype() {
+    if (this.carPrototype && this.carPrototype.id) {
+      await CarRequests.deletePrototype(this.carPrototype.id);
+      this.carPrototype = null;
+    }
+  }
+
+  async sendMintTransaction(): Promise<void> {
+    const { carPrototype } = this;
+    console.log('sendTransaction')
+
+    if (!carPrototype || !carPrototype.json) {
+      throw new Error('');
+    }
+
+    this.setMintTransactionError('');
+    const walletTransactionService = new EverWalletControllerWeb(getEverWalletClient());
+
+    if(carPrototype.carFeatures.id){
+    const transactionResult = await walletTransactionService.mintToken({
+      name: JSON.stringify(carPrototype.carFeatures.id),
+      url: carPrototype.json,
+    }
+    );
+      console.log(transactionResult)
+    if (transactionResult?.error) {
+      this.setMintTransactionError(transactionResult?.error?.message ?? 'Item creation failed.');
+    }
+  }
+  }
+
+  setMintTransactionError = (error: string | null) => {
+    this.mintTransactionError = error;
+  };
 
   reset() {
     this.model = null;

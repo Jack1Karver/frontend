@@ -25,6 +25,7 @@ export const WALLET_LABELS = {
   accountInactiveTitle: 'Account is not active',
   accountInactiveDesc: 'Make sure your Everscale account is deployed and active.',
   canceled: 'Canceled by user.',
+  everwalletNotConnected:  'Ever Wallet is not connected'
 };
 
 export const FILE_SIZE_ERROR = 'Maximum file size exceeded!';

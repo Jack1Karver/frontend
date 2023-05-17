@@ -7,35 +7,30 @@ import ItemStore from 'src/stores/item/item-store';
 import { ITokenRoot } from '../interfaces/roots/token-root.interface';
 
 export interface IContractsControllerWeb<ReturnType> {
-  mintTip4Token({
-    json,
-    royalty,
-    collection,
-  }: {
-    json: string;
-    royalty: number;
-    collection: ICollection;
-  }): Promise<ReturnType>;
+  mintToken(
+    {
+      name,
+      url,
 
+    }: {
+      name: string;
+      url: string;
+
+    }
+   ): Promise<ReturnType>;
 
   sellToken(itemStore: ItemStore, price: number): Promise<ReturnType>;
 
   buyToken(itemStore: ItemStore): Promise<ReturnType>;
 
   cancelSell(offer: IOffer): Promise<ReturnType>;
-
 }
 
 export interface IWalletTransactionsService<ReturnType> {
-  mintTip4Token({
-    json,
-    royalty,
-    collection,
-  }: {
-    json: string;
-    royalty: number;
-    collection: ICollection;
-  }): Promise<ReturnType>;
+  mintToken(
+    name: string,
+    url: string,
+   ): Promise<ReturnType>;
 
 
   sellToken(itemStore: ItemStore, price: number): Promise<ReturnType>;

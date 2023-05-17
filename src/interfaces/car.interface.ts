@@ -23,6 +23,7 @@ export interface ICar extends ISimpleCar {
 }
 
 export interface ICarFeatures {
+  id?: number;
   model: IModel;
   yearProd: number;
   engineType: engineType;
@@ -40,4 +41,6 @@ export interface ICarPrototype {
   carFeatures: ICarFeatures;
   description: string;
   files?: File[];
+  json?: string;
+  jsonHash?: string;
 }

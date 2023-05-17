@@ -10,9 +10,9 @@ import {
 import { Account, AccountOptions, ContractPackage } from '@tonclient/appkit';
 import { libWeb } from '@tonclient/lib-web';
 import { EVERSCALE_SERVER_ENDPOINTS } from '@/config/everscale.config';
-import { Tip4DataAccount } from './data/tip4-data.account';
-import { Tip4SellRootAccount } from './data/tip4-sell-root.account';
-import { Tip4SellAccount } from './data/tip4-sell.account';
+import { TnftDataAccount } from './data/tnft-data.account';
+import { TnftSellRootAccount } from './data/tnft-sell-root.account';
+import { ROOTS } from '@/config/ton.config';
 
 export default class ContractsService {
   readonly client: TonClient;
@@ -127,18 +127,12 @@ export default class ContractsService {
   }
 
   
-
-  getTip4DataAccount(address: string, dataAbi: string): Tip4DataAccount {
-    return new Tip4DataAccount(...this.getAccountOptions(address, dataAbi));
+  getTnftDataAccount(address: string): TnftDataAccount {
+    return new TnftDataAccount(...this.getAccountOptions(address,ROOTS.data.abi));
   }
 
-  getTip4SellRootAccount(address: string, dataAbi: string): Tip4SellRootAccount {
-    return new Tip4SellRootAccount(...this.getAccountOptions(address, dataAbi));
-  }
-
-  
-  getTip4SellAccount(address: string, dataAbi: string): Tip4SellAccount {
-    return new Tip4SellAccount(...this.getAccountOptions(address, dataAbi));
+  getTnftSellRootAccount(address: string, dataAbi: string): TnftSellRootAccount {
+    return new TnftSellRootAccount(...this.getAccountOptions(address, dataAbi));
   }
 
   getAccountOptions(address: string, abi: string): [contract: ContractPackage, accountOptions: AccountOptions] {
