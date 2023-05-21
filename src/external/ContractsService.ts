@@ -128,7 +128,7 @@ export default class ContractsService {
 
   
   getTnftDataAccount(address: string): TnftDataAccount {
-    return new TnftDataAccount(...this.getAccountOptions(address,ROOTS.data.abi));
+    return new TnftDataAccount(...this.getAccountOptions(address, ROOTS.data.abi));
   }
 
   getTnftSellRootAccount(address: string, dataAbi: string): TnftSellRootAccount {

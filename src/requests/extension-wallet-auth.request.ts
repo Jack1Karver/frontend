@@ -20,4 +20,8 @@ export class ExtensionWalletAuthRequests {
       address,
     });
   }
+
+  static async logout(){
+    return apiClient.send(HttpMethods.POST, '/auth/logout');
+  }
 }

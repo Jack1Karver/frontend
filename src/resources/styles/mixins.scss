@@ -131,3 +131,19 @@
     @content;
   }
 }
+
+@mixin visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+@mixin invisible {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity $t-std;
+}
+
+@mixin sticky($args...) {
+  position: -webkit-sticky; // for old safari
+  @include position(sticky, $args...);
+}

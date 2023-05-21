@@ -139,7 +139,7 @@
 
     &--fadeInLeft {
       overflow: hidden;
-      animation: fadeInLeft $t-std backwards;
+      animation: fadeInLeft 0.2s ease-in-out backwards;
     }
 
     &:last-child {
@@ -183,7 +183,7 @@
     }
 
     &--hiding {
-      animation: fadeInRight $t-std forwards;
+      animation: fadeInRight 0.2s ease-in-out forwards;
       flex-shrink: 0;
     }
 
@@ -195,7 +195,7 @@
     }
 
     &--makeSingle {
-      animation: makeSingle $t-std forwards;
+      animation: makeSingle 0.2s ease-in-out forwards;
       width: 100%;
       overflow: hidden;
       flex-shrink: 0;

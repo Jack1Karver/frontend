@@ -39,4 +39,16 @@ export class CarRequests {
   static async deletePrototype(id: string){
     await apiClient.send(HttpMethods.DELETE, `/cars/delete/?id=${id}`)
   }
+
+  static async fetchMark(name: string){
+    const res = await apiClient.send(HttpMethods.GET,`/cars/mark?name=${name}`)
+
+    return res.data as IMark ?? null
+  }
+
+  static async fetchModel(name: string, markId: number){
+    const res = await apiClient.send(HttpMethods.GET, `cars/model/?markId=${markId}&name=${name}`)
+
+    return res.data as IModel ?? null
+  }
 }

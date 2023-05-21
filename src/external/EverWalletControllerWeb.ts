@@ -16,40 +16,8 @@ export default class EverWalletControllerWeb extends AbstractContractsController
     this.ewClient = ewClient;
   }
 
-  // async mintTip4Token(
-  //   json: string): Promise<IExtensionResponse> {
-  //   try {
-  //     const userAddress = await this.getUserAddress();
-  //     json = JSON.stringify(json)
-  //     console.log(json)
-
-  //     const transactionRes = await this.provider.sendMessage({
-  //       sender: new Address(userAddress),
-  //       recipient: new Address(ROOTS.nftRoot.address),
-  //       amount: toNano(MARKETPLACE.mintingFeeTip4).toString(),
-  //       bounce: true,
-  //       payload: {
-  //         abi: ROOTS.nftRoot.abi,
-  //         method: 'mint',
-  //         params: {
-  //           json,
-  //           url: 'some_url',
-  //           royalty: [[userAddress, 0]],
-  //         },
-  //       },
-  //     });
-
-  //     console.log(transactionRes)
-
-  //     return { data: { message: transactionRes?.transaction?.inMessage?.hash } };
-  //   } catch (e) {
-  //     return { error: <IExtensionError>e };
-  //   }
-  // }
-
   async mintToken({ name, url }: { name: string; url: string }): Promise<IExtensionResponse> {
     try {
-      console.log(name)
       const userAddress = await this.getUserAddress();
 
       const transactionRes = await this.provider.sendMessage({

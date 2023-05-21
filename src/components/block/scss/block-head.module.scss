@@ -21,7 +21,7 @@
     a {
       color: currentColor;
       border-bottom: 1px solid currentColor;
-      transition: border-bottom-color $t-std;
+      transition: border-bottom-color 0.2s ease-in-out;
 
       @include hover {
         border-bottom-color: transparent;

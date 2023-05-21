@@ -51,3 +51,9 @@ export const getConfirmEmailLink = async (data: TFields): Promise<IApiResponse> 
 export const confirmEmail = async (token: string): Promise<IApiResponse> => {
   return await apiClient.send(HttpMethods.GET, `/user/email/confirm?token=${token}`);
 };
+
+export const fetchUserBySlug = async (slug: string)=>{
+  const res = await apiClient.send(HttpMethods.GET, `/user/${slug}`);
+
+  return res.data as IUser ?? null
+}

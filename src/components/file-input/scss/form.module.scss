@@ -192,13 +192,13 @@
 
   &__success-msg {
     margin-left: 20px;
-    animation: fadeIn $t-std;
+    animation: fadeIn 0.2s ease-in-out;
   }
 
   &__error {
     @include font($fs: 10px, $c: $c-error, $lh: 1.6);
     white-space: nowrap;
-    animation: fadeIn $t-std;
+    animation: fadeIn 0.2s ease-in-out;
     margin-top: 4px;
 
     @include media-sm {
