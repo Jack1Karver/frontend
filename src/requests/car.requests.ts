@@ -1,6 +1,6 @@
 import { HttpMethods } from '@/config/enums/http-methods.enum';
 import { apiClient } from '@/http/api-client';
-import { ICarPrototype } from '@/interfaces/car.interface';
+import { ICar, ICarPrototype } from '@/interfaces/car.interface';
 import { TFields } from '@/interfaces/common';
 import { IMark } from '@/interfaces/mark-interface';
 import { IModel } from '@/interfaces/model.interface';
@@ -47,8 +47,20 @@ export class CarRequests {
   }
 
   static async fetchModel(name: string, markId: number){
-    const res = await apiClient.send(HttpMethods.GET, `cars/model/?markId=${markId}&name=${name}`)
+    const res = await apiClient.send(HttpMethods.GET, `/cars/model/?markId=${markId}&name=${name}`)
 
     return res.data as IModel ?? null
+  }
+
+  static async fetchCarByAddress(address:string){
+    const res = await apiClient.send(HttpMethods.GET, `/cars/${address}`)
+
+    return res.data as ICar ?? null
+  }
+
+  static async fetchOffers(){
+    const res = await apiClient.send(HttpMethods.GET, `/cars/offers`)
+
+    return res.data as ICar[] ?? []
   }
 }

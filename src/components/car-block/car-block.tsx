@@ -10,14 +10,15 @@ import { CarFilterStore } from '@/stores/filter/car-ad.store';
 import CarAd from '../car-ad/car-ad';
 
 type CarBlockProps = {
-  carStore: CarFilterStore
+  carStore: CarFilterStore;
+  head: string;
 };
 
-const CarBlock = observer(({carStore }: CarBlockProps) => {
-  
+const CarBlock = observer(({carStore, head }: CarBlockProps) => {
+ 
   return (
     <Block bg={'light'}>
-      <BlockHead title={'My offers'} />
+      <BlockHead title={head} />
       <InfiniteScroll
         next={carStore.loadMore}
         hasMore={carStore.totalCars > carStore.cars.length}

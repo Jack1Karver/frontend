@@ -1,6 +1,4 @@
 import React, { ReactNode } from 'react';
-
-
 import styles from 'src/components/block/scss/block.module.scss';
 import Container from '../container/container';
 
@@ -21,7 +19,8 @@ type BlockPropTypes = {
 export default function Block(props: BlockPropTypes): JSX.Element {
   return (
     <section
-      className={`${styles.block} ${styles['block--' + props.bg]} ${props.borders ? styles['block--bordered'] : ''} ${
+      className={`${styles.block} ${styles['block--' + props.bg]}
+       ${props.borders ? styles['block--bordered'] : ''} ${
         props.paddings ? styles['block--' + props.paddings] : ''
       } ${props.className ? styles[props.className] : ''}  ${
         props.modifier ? styles[`block--${props.modifier}`] : ''

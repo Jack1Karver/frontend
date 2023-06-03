@@ -9,8 +9,8 @@ type ListColumnsProps = {
 const ListColumns = ({ items }: ListColumnsProps) => {
   return (
     <ol className={styles.list}>
-      {items.map(item => {
-        return <li className={styles.list__item}>{item}</li>;
+      {items.map((item, index) => {
+        return <li className={styles.list__item} key={index}>{item}</li>;
       })}
     </ol>
   );

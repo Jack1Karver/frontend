@@ -50,6 +50,7 @@ export default class EverWalletClient implements IExtensionClient {
     const userAddress = accountInteraction.address.toString();
 
     if (!(await this.provider.getFullContractState({ address: accountInteraction.address })).state?.isDeployed) {
+      console.log('account_not_deployed')
       throw new Error('account_not_deployed');
     }
     const nonceResponse = await ExtensionWalletAuthRequests.getUserNonce(userAddress);

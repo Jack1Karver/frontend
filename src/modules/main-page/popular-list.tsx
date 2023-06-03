@@ -23,8 +23,8 @@ const PopularMarks = () => {
     <ListColumns
       items={
         marks ? 
-        marks.map(mark => {
-          return <Link href={'/car/ford/all'}>{mark.name}</Link>;
+        marks.map((mark, index) => {
+          return <Link href={`/ads/${mark.name}`} key={index}>{mark.name}</Link>;
         })
         : []
       }

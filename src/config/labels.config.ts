@@ -12,7 +12,7 @@ export const COMMON_LABELS = {
   login: 'Sign in',
 
   register: 'Регистрация',
-  logout: 'Выйти',
+  logout: 'Log out',
   email: 'Электронная почта',
 
   haveAccount: 'Нет аккаунта?',

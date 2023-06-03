@@ -62,6 +62,7 @@ export class CarFilterStore {
     if (this.isShowSearchQuery) {
       this.applySearchParams();
     }
+    await this.applyInitialSearchParams(this.permanentParams);
 
     this.setAppliedFilters({
       ...this.appliedFilters,
@@ -71,18 +72,17 @@ export class CarFilterStore {
     });
   }
 
-  applyInitialSearchParams = async (params: Record<keyof ICarFilter, string>) => {
+  applyInitialSearchParams = async (params: ICarFilter) => {
     const { owner, mark, model, year_from, year_to } = params;
-    console.log(params)
 
     if (owner) {
-      this.filterByOwner.applyInitialOwner(owner);
+      await this.filterByOwner.applyInitialOwner(owner);
     }
     if (mark) {
-      this.filterByModel.applyInitialMark(mark);
+      await this.filterByModel.applyInitialMark(mark);
     }
     if (model) {
-      this.filterByModel.applyInititalModel(model);
+      await this.filterByModel.applyInititalModel(model);
     }
   };
 
@@ -124,8 +124,8 @@ export class CarFilterStore {
 
   apply(): void {
     this.setAppliedFilters({
-      ...this.appliedFilters,
       ...this.getFiltersForApply(),
+      ...this.appliedFilters,
     });
   }
 
@@ -148,10 +148,11 @@ export class CarFilterStore {
   };
 
   async fetchCars() {
+    this.cars = [];
     const filters = this.getFilterParams();
     console.log(filters)
     const response = await new FilterRequests().fetchCars(filters);
-    if (response) {
+    if (response.items) {
       this.setCars(response.items);
       this.setTotalItems(response.count);
     }
@@ -175,12 +176,16 @@ export class CarFilterStore {
     const filterParams = {
       ...this.appliedFilters,
       limit: this.limit,
-      owner: this.filterByOwner.owner,
+      owner: this.filterByOwner.filter,
       mark: this.filterByModel.filterMark,
       model: this.filterByModel.filterModel,
-      ...this.permanentParams,
     };
 
     return removeNullParams(filterParams);
+  }
+
+  reset(){
+    this.filterByModel.resetModel();
+    this.filterByModel.resetMark();
   }
 }

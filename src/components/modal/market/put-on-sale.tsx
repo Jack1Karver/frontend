@@ -6,7 +6,7 @@ import Button from '@/components/button/button';
 import UserStore from '@/stores/user-store';
 
 import styles from 'src/components/modal/scss/modal.module.scss';
-import CarStore from '@/stores/car-store';
+import CarStore from '@/stores/car.store';
 import { PutOnSaleStore } from '@/stores/put-on-sale.store';
 import { getEverWalletClient } from '@/utils/wallet/client';
 import EverWalletControllerWeb from '@/external/EverWalletControllerWeb';
@@ -15,6 +15,7 @@ import { notify, sprintf } from '@/utils/common.utils';
 import { DetailsItem, DetailsRow } from '@/components/modal/details/details';
 import Input from '@/components/input/input';
 import { ICar } from '@/interfaces/car.interface';
+import ModalStore from '@/stores/modal-store';
 
 type PutOnSaleProps = {
   car: ICar;
@@ -24,6 +25,7 @@ type PutOnSaleProps = {
 const PutOnSale = observer(({ car, initialPrice }: PutOnSaleProps) => {
   const putOnSaleStore = useMemo(() => new PutOnSaleStore(), [initialPrice]);
   const price = putOnSaleStore.price;
+  const { setIsShowModal } = ModalStore;
 
   useEffect(() => {
     if (initialPrice) {
@@ -43,9 +45,8 @@ const PutOnSale = observer(({ car, initialPrice }: PutOnSaleProps) => {
 
     if (transactionRes?.error) {
       notify(transactionRes?.error?.message!);
-
-      return closeModal();
     }
+    return closeModal();
   }
 
   const sellInfo = sprintf(
@@ -79,7 +80,7 @@ const PutOnSale = observer(({ car, initialPrice }: PutOnSaleProps) => {
                 label={'You will receive'}
                 value={
                   <>
-                    <b>{price ? <>{Number(price).toLocaleString('en-US')} EVER</> : '...'}</b>
+                    <b>{price ? <>{Number(price - price * 0.03).toLocaleString('en-US')} EVER</> : '...'}</b>
                   </>
                 }
               />
@@ -87,8 +88,15 @@ const PutOnSale = observer(({ car, initialPrice }: PutOnSaleProps) => {
           </div>
 
           <div className={`${styles.modal__field} ${styles['modal__field--sm']}`}>
-            <div className={styles.modal__submit}>
-              <Button size={'sm'} mod={'brand'} className={styles.modal__btn} onClick={sell} content={'Put on sale'} />
+            <div className={styles['modal__btn-row']}>
+              <Button size={'md'} mod={'brand'} className={styles.modal__btn} onClick={sell} content={'Confirm'} />
+              <Button
+                size={'md'}
+                mod={'empty'}
+                className={styles.modal__btn}
+                onClick={() => setIsShowModal(false)}
+                content={'Close'}
+              />
             </div>
           </div>
         </div>

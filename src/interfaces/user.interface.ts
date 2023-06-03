@@ -16,7 +16,6 @@ export interface IAuthorizedUser extends IUser {
     email: string;
     isConfirmed: boolean;
   };
-  gbCollector: boolean;
 }
 
 

@@ -13,6 +13,7 @@ export class FilterByModelStore {
   }
 
   setMark(mark: IMark) {
+    console.log(mark.name)
     this.mark = mark;
   }
 
@@ -38,6 +39,14 @@ export class FilterByModelStore {
     if (this.mark) {
       return await CarRequests.fetchModel(name, this.mark.id);
     }
+  }
+
+  resetMark(){
+    this.mark = null;
+  }
+
+  resetModel(){
+    this.model = null;
   }
 
   get filterMark(): string | null {

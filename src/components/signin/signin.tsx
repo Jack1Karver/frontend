@@ -18,6 +18,7 @@ const SignIn = observer(() => {
   };
 
   const signInWithEverWallet = async () => {
+
     if (EverWalletStore?.client && EverWalletStore?.isProperNetwork) {
       EverWalletStore?.connectWallet();
       try {

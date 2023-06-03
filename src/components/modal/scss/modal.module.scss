@@ -497,6 +497,7 @@
   &__submit {
     padding-top: 11px;
     position: relative;
+    @include flex($jc: center);
 
     .error {
       @include absolute($t: -14px);

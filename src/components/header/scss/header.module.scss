@@ -48,8 +48,11 @@
     }
   }
 
-  &__menu {
+  &__menu { 
     margin-left: auto;
+    margin-right: 16px;
+    width:auto;
+    border-right: 1px solid $c-grey;
   }
 
   &__avatar {
@@ -60,7 +63,7 @@
     }
   }
   &__login {
-    margin-left: 16px;
+    margin-left: 32px;
     @include flex();
     grid-gap: 24px;
   }

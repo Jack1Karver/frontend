@@ -22,7 +22,7 @@ const UserAds = ({ user }: UserAdProps) => {
 
   return (
     <>
-    <CarBlock carStore={carFilterStore}/>
+    <CarBlock carStore={carFilterStore} head={'Offers'}/>
     </>
   )
 };

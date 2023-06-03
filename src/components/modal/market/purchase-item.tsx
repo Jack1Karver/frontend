@@ -10,26 +10,24 @@ import { closeModal, showTransactionLoader } from '@/utils/ui.utils';
 import { getEverWalletClient } from '@/utils/wallet/client';
 import EverWalletControllerWeb from '@/external/EverWalletControllerWeb';
 import { notify } from '@/utils/common.utils';
-import CarStore from '@/stores/car-store';
+import CarStore from '@/stores/car.store';
 import Link from 'next/link';
 import { DetailsItem, DetailsRow } from '@/components/modal/details/details';
+import { ICar } from '@/interfaces/car.interface';
+import ModalStore from '@/stores/modal-store';
 
 type PurchasePackProps = {
-  carStore: CarStore;
+  car: ICar;
 };
 
-const PurchaseItem = observer(({ carStore }: PurchasePackProps) => {
-  const { user } = UserStore;
-  const { car } = carStore;
+const PurchaseItem = observer(({ car }: PurchasePackProps) => {
+  const { setIsShowModal } = ModalStore;
 
   const buy = async () => {
-    showTransactionLoader();
-
     const walletService = new EverWalletControllerWeb(getEverWalletClient());
     const transactionRes = await walletService.buyToken(car);
 
     if (transactionRes?.error) {
-      notify(transactionRes?.error?.message!);
       return closeModal();
     }
   };
@@ -52,22 +50,30 @@ const PurchaseItem = observer(({ carStore }: PurchasePackProps) => {
           {car.offer?.price && (
             <div className={styles.modal__details}>
               <DetailsRow>
-                  <DetailsItem
-                    label={'You will pay'}
-                    value={
-                      <>
-                        <b>
-                         {car.offer.price}
-                        </b>
-                        &nbsp;
-                        {'EVER'}
-                      </>
-                    }
-                  />
-                </DetailsRow>
+                <DetailsItem
+                  label={'You will pay'}
+                  value={
+                    <>
+                      <b>{car.offer.price}</b>
+                      &nbsp;
+                      {'EVER'}
+                    </>
+                  }
+                />
+              </DetailsRow>
             </div>
           )}
-          <Button size={'sm'} mod={'brand'} className={styles.modal__btn} onClick={buy} content={'Purchase'} />
+
+          <div className={styles['modal__btn-row']}>
+            <Button size={'md'} mod={'brand'} className={styles.modal__btn} onClick={buy} content={'Confirm'} />
+            <Button
+              size={'md'}
+              mod={'empty'}
+              className={styles.modal__btn}
+              onClick={() => setIsShowModal(false)}
+              content={'Close'}
+            />
+          </div>
         </div>
       </>
     </>
@@ -75,4 +81,3 @@ const PurchaseItem = observer(({ carStore }: PurchasePackProps) => {
 });
 
 export default PurchaseItem;
-

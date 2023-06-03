@@ -193,7 +193,7 @@ export default class CreateStore {
 
   async sendMintTransaction(): Promise<void> {
     const { carPrototype } = this;
-    console.log('sendTransaction')
+
 
     if (!carPrototype || !carPrototype.json) {
       throw new Error('');
@@ -208,7 +208,7 @@ export default class CreateStore {
       url: carPrototype.json,
     }
     );
-      console.log(transactionResult)
+
     if (transactionResult?.error) {
       this.setMintTransactionError(transactionResult?.error?.message ?? 'Item creation failed.');
     }

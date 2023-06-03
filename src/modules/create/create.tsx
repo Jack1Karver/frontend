@@ -97,36 +97,40 @@ const Create = observer(() => {
               extensions={FILE_EXTENSIONS.image}
               />
               <Select
+              key = {'1'}
                 options={getYears()}
                 placeholder={'Year'}
                 title={'Production year'}
                 onSelect={year => createStore.setYearProd(year as number)}
               />
               <Select
+              key = {'2'}
                 options={Object.values(engineType)}
                 placeholder={'Select engine type'}
                 onSelect={type => createStore.setEngineType(type as string)}
                 title={'Engine type'}
               />
               <Select
+              key = {'3'}
                 options={Object.values(driveType)}
                 placeholder={'Select drive type'}
                 onSelect={type => createStore.setDriveType(type as string)}
                 title={'Drive type'}
               />
               <Select
+              key = {'4'}
                 options={Object.values(gearboxType)}
-                placeholder={'Select gear box type'}
+                placeholder={'Select gearbox type'}
                 onSelect={type => createStore.setGearboxType(type as string)}
-                title={'Gear box type'}
+                title={'Gearbox type'}
               />
-              <Input type={'number'} title={'Horsepower'} onChange={e => createStore.setHp(e.target.value)} />
-              <Input type={'number'} title={'Engine capacity'} onChange={e => createStore.setEngineCapacity(e.target.value)} />
-              <Input type={'text'} title={'Color'} onChange={e => createStore.setColor(e.target.value)} />
-              <Input type={'number'} title={'Mileage'} onChange={e => createStore.setMileage(e.target.value)} />
-              <Input type={'textarea'} title={'Description'} onChange={e => createStore.setDescription(e.target.value)} />
-              <Input type={'number'} title={'Price'} onChange={e => createStore.setPrice(e.target.value)} />
-              <Button className={styles.create__button} content={'Create offer'} mod={'brand'} onClick={mint} />
+              <Input type={'number'} title={'Horsepower'} onChange={e => createStore.setHp(e.target.value)} key = {'5'}/>
+              <Input type={'number'} title={'Engine capacity'} onChange={e => createStore.setEngineCapacity(e.target.value)} key = {'6'}/>
+              <Input type={'text'} title={'Color'} onChange={e => createStore.setColor(e.target.value)} key = {'7'}/>
+              <Input type={'number'} title={'Mileage'} onChange={e => createStore.setMileage(e.target.value)} key = {'8'}/>
+              <Input type={'textarea'} title={'Description'} onChange={e => createStore.setDescription(e.target.value)} key = {'9'}/>
+              <Input type={'number'} title={'Price'} onChange={e => createStore.setPrice(e.target.value)} key = {'10'}/>
+              <Button className={styles.create__button} content={'Confirm offer'} mod={'brand'} onClick={mint} key = {'11'}/>
             </>
           ) : (
             ''

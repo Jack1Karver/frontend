@@ -7,9 +7,21 @@ import Button from '../button/button';
 import userStore from '@/stores/user-store';
 import Menu from '../menu/menu';
 import { ExtensionWalletAuthRequests } from '@/requests/extension-wallet-auth.request';
+import { IAuthorizedUser} from '@/interfaces/user.interface';
+import { useEffect, useState } from 'react';
 
-const Header = observer(() => {
-  const { user } = userStore;
+type HeaderProps = {
+  user: IAuthorizedUser | null
+}
+
+const Header = observer(({user}:HeaderProps) => {
+  const [showLink, setShowLink] = useState(false)
+
+   useEffect(()=>{
+    if(user){
+      setShowLink(true)
+    }
+  }, [user])
 
   const logout = async () => {
     await ExtensionWalletAuthRequests.logout();
@@ -25,22 +37,16 @@ const Header = observer(() => {
         <div className={styles.header__menu}>
           <Menu />
         </div>
+        <Button size={'md'} mod={'brand'} onClick={() => Router.push('/create')} content={'Create offer'} />
         <div className={styles.header__login}>
-          {/* {userAuthorized ? (
+         
+          {!showLink ? (
             <>
-              <Link href={{ pathname:'/profile/[userName]', query:{ userName: `${userAuthorized.userName}` } }}>
-                <a className={styles.header__user}>{userAuthorized.userName}</a>
-              </Link>
-              <Button size={'xs'} onClick={logout} content={COMMON_LABELS.logout} />
+            <Button size={'sm'} onClick={() => Router.push('/signin')} content={COMMON_LABELS.login} />
             </>
           ) : (
-           
-          )} */}
-          {!user ? (
-            <Button size={'sm'} onClick={() => Router.push('/signin')} content={COMMON_LABELS.login} />
-          ) : (
             <>
-              <Link href={{ pathname:'/user/[slug]', query:{ slug: `${user.slug}`} }} className={styles.header__user}>{user.name}</Link>
+              <Link href={{ pathname:'/user/[slug]', query:{ slug: `${user!.slug}`} }} className={styles.header__user}>{user!.name}</Link>
               <Button size={'sm'} onClick={logout} content={COMMON_LABELS.logout} />
             </>
           )}

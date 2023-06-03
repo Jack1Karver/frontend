@@ -1,0 +1,7 @@
+.filter{
+    @include flex($fd: row, $ai:flex-start);
+    z-index: 2;
+    width:100%;
+    gap: 16px;
+    min-height: 150px;
+}

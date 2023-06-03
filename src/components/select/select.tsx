@@ -13,27 +13,27 @@ const Icon = () => {
 type SelectProps = {
   placeholder: string;
   options: string[] | number[];
-  onSelect: (value: string| number) => void
+  onSelect: (value: string | number) => void;
+  onClear?: () => void;
   title?: string;
+  selected?: string | number;
+  bg?: 'dark' | 'light';
 };
 
-const Select = ({ placeholder, options, onSelect, title }: SelectProps) => {
+const Select = ({ placeholder, options, onSelect, title, selected, bg = 'light', onClear }: SelectProps) => {
   const [showMenu, setShowMenu] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<string |number| null>(null);
+  const [selectedValue, setSelectedValue] = useState<string | number | null>(selected ?? null);
+
   const inputRef = useRef<HTMLDivElement>(null);
 
-  const getDisplay = () => {
-    if (selectedValue) {
-      return selectedValue;
-    }
-  };
-
   useEffect(() => {
+    selected && setSelectedValue(selected);
     const handler = (e: any) => {
       //@ts-ignore
-      if(inputRef.current && !inputRef.current?.contains(e.target)){
-      setShowMenu(false)}
-    }
+      if (inputRef.current && !inputRef.current?.contains(e.target)) {
+        setShowMenu(false);
+      }
+    };
     window.addEventListener('click', handler);
     return () => {
       window.removeEventListener('click', handler);
@@ -44,19 +44,29 @@ const Select = ({ placeholder, options, onSelect, title }: SelectProps) => {
     setShowMenu(!showMenu);
   };
 
-  const onItemClick = (option: string| number) => {
+  const onItemClick = (option: string | number) => {
     setSelectedValue(option);
     onSelect(option);
   };
 
+  const clear = () => {
+    if (onClear) {
+      onClear();
+    }
+    setSelectedValue(null);
+  };
+
   return (
     <>
-      <h5>{title}</h5>
+      {title ? <h5>{title}</h5> : ''}
       <div className={styles.select__container}>
         <div ref={inputRef} className={styles.select__input} onClick={handleInputClick}>
           {selectedValue ?? placeholder}
           {showMenu && (
-            <div className={styles.select__menu}>
+            <div className={`${styles.select__menu} ${styles[`select__menu--${bg}`]}`}>
+              <div className={styles.select__item} onClick={clear}>
+                Clear
+              </div>
               {options.map(option => {
                 return (
                   <div key={option} className={styles.select__item} onClick={() => onItemClick(option)}>

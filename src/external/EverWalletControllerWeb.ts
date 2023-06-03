@@ -44,7 +44,7 @@ export default class EverWalletControllerWeb extends AbstractContractsController
 
   async sellToken(car: ICar, price: number): Promise<IExtensionResponse> {
     try {
-      const itemAccount = await this.contractsService.getTnftDataAccount(car.address);
+      const itemAccount =  this.contractsService.getTnftDataAccount(car.address);
       const userAddress = await this.getUserAddress();
       const sellRootAddress = await itemAccount.getSellRootAddress();
       const sellRootAccount = this.contractsService.getTnftSellRootAccount(
@@ -58,7 +58,7 @@ export default class EverWalletControllerWeb extends AbstractContractsController
         amount: toNano(MARKETPLACE.offerCreationFee).toString(),
         bounce: true,
         payload: {
-          abi: JSON.stringify(ROOTS.sellRoot.abi),
+          abi: ROOTS.sellRoot.abi,
           method: 'deployOffer',
           params: {
             _addrRoot: await itemAccount.getNftRootAddress(),
@@ -84,7 +84,7 @@ export default class EverWalletControllerWeb extends AbstractContractsController
         amount: toNano(car.offer.price).toString(),
         bounce: true,
         payload: {
-          abi: JSON.stringify(ROOTS.data.abi),
+          abi: ROOTS.sell.abi,
           method: 'buyToken',
           params: {},
         },
@@ -106,12 +106,11 @@ export default class EverWalletControllerWeb extends AbstractContractsController
         amount: cancelFee.toString(),
         bounce: true,
         payload: {
-          abi: offer.sellRoot.sellAbi,
+          abi: ROOTS.sell.abi,
           method: 'cancelOrder',
           params: {},
         },
       });
-
       return { data: { message: transactionRes?.transaction?.inMessage?.hash } };
     } catch (e) {
       return { error: <IExtensionError>e };

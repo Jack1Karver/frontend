@@ -14,7 +14,6 @@ export class FilterByOwnerStore {
   }
 
   async applyInitialOwner(slug: string) {
-    console.log(slug)
     const owner = await this.fetchInitialOwner(slug);
 
     this.setOwner(owner);
@@ -25,6 +24,6 @@ export class FilterByOwnerStore {
   }
 
   get filter(): string | null {
-    return this.owner?.name ?? null;
+    return this.owner?.slug ?? null;
   }
 }

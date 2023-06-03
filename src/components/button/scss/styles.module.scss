@@ -22,7 +22,7 @@
 
   &--empty {
     background-color: rgba(0, 0, 0, 0);
-    border: none;
+    border: 1px solid $c-black;
     color: $c-brand;
 
     &:hover {

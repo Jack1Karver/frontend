@@ -7,6 +7,7 @@ import Router from 'next/router';
 import UserStore from '@/stores/user-store';
 import ModalStore from '@/stores/modal-store'
 import dynamic from 'next/dynamic';
+import { formatNumberWithLetter } from '@/utils/common.utils';
 
 type CarAdProps = {
   car: ICar;
@@ -14,6 +15,8 @@ type CarAdProps = {
 
 const CarAd = ({ car }: CarAdProps) => {
   const DynamicPutOnSale = dynamic(() => import('@/components/modal/market/put-on-sale'), { ssr: false });
+  const DynamicCancelSale = dynamic(() => import('@/components/modal/market/cancel-sale'), { ssr: false });
+  const DynamicPurchase = dynamic(() => import('@/components/modal/market/purchase-item'), { ssr: false });
   const [activePhoto, setActivePhoto] = useState<string>(car.files[0]);  
   const userStore = UserStore;
 
@@ -25,6 +28,18 @@ const CarAd = ({ car }: CarAdProps) => {
     e.stopPropagation()
     ModalStore.setIsShowModal(true);
     ModalStore.setModalContent(<DynamicPutOnSale car={car}/>);
+  }
+
+  const cancelSale =(e:React.MouseEvent)=>{
+    e.stopPropagation()
+    ModalStore.setIsShowModal(true);
+    ModalStore.setModalContent(<DynamicCancelSale car={car}/>);
+  }
+
+  const purchase = (e: React.MouseEvent)=>{
+    e.stopPropagation()
+    ModalStore.setIsShowModal(true);
+    ModalStore.setModalContent(<DynamicPurchase car={car}/>);
   }
 
   const showFile = (index: number) => {};
@@ -57,11 +72,11 @@ const CarAd = ({ car }: CarAdProps) => {
       <div className={styles.car_ad__price}>
         {car.offer ? (
           <>
-            <h3>{car.offer.price} EVER</h3>
+            <h3>{formatNumberWithLetter(car.offer.price)}</h3><h5>EVER</h5>
             {userStore.user?.slug === car.owner.slug ? (
-              <Button size={'md'} mod={'brand'} content={'Cancel sale'} />
+              <Button size={'md'} mod={'brand'} content={'Cancel sale'} onClick={e=>cancelSale(e)}/>
             ) : (
-              <Button size={'md'} mod={'brand'} content={'Buy'} />
+              <Button size={'md'} mod={'brand'} content={'Purchase'} onClick={(e)=>purchase(e)}/>
             )}
           </>
         ) : (
