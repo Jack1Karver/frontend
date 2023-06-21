@@ -1,0 +1,40 @@
+.modal {
+  &__loadingProcess {
+    @include flex();
+  }
+
+  &__loaderLeft {
+    margin-right: 24px;
+  }
+
+  &__loaderTitle {
+    @include font($fs: 18px, $lh: 1.5, $fw: 600)
+  }
+
+  &__loaderDescription {
+    @include font($fs: 14px, $lh: 1.6);
+
+    &:not(:first-child) {
+      margin-top: 4px;
+    }
+  }
+
+  &__loadingCheck {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: $c-black;
+    position: relative;
+
+    &:after {
+      @include absolute($t: 50%, $l: 50%);
+      transform: translate(-50%, -50%);
+      content: '';
+      width: 12px;
+      height: 9px;
+      background-image: url('../../../resources/img/icons/check.svg');
+      background-repeat: no-repeat;
+    }
+  }
+}

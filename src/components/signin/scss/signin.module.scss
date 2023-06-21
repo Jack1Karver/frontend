@@ -1,0 +1,56 @@
+.signin {
+  @include flex($fd: column);
+
+  &__block {
+    margin-bottom: 48px;
+    width: 100%;
+  }
+
+  &__wrap {
+    padding-top: 216px;
+  }
+
+  &__form {
+    max-width: 428px;
+    margin-right: auto;
+  }
+
+  &__title {
+    @include font($fs: 44px, $fw: 600, $lh: 1.1);
+
+    @include flex($fd: column, $ai: flex-start);
+  }
+
+  &__logo {
+    color: $c-brand;
+  }
+
+  &__desc {
+    @include font($fs: 18px);
+  }
+
+  &__item {
+    margin-top: 16px;
+    padding: 14px;
+    border: 1px solid $c-black;
+    border-radius: 2px;
+    @include flex;
+    width: 100%;
+    position: relative;
+  }
+  &__item-title {
+    @include font($fs: 14px, $lh: 1.4, $fw: 500);
+    margin-left: 16px;
+  }
+  &__item-icon {
+    @include flex;
+  }
+
+  &__item-subtitle {
+    @include font($fs: 10px, $lh: 1.4, $fw: 400, $ls: 0.02em);
+    text-transform: uppercase;
+    color: $c-grey;
+    padding-left: 10px;
+    margin-left: auto;
+  }
+}

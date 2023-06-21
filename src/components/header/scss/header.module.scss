@@ -1,33 +1,58 @@
 .header {
-  padding: 32px 0px;
-  width: 100%;
   @include flex($ai: center, $jc: center);
   @include fixed();
+  padding: 16px 0;
   background-color: $c-white;
-  color: $c-brand;
+  width: 100%;
+  border-bottom: 1px solid rgba($c-disabled-text, 0.5);
+  box-shadow: 0px 5px 5px -5px rgba($c-disabled-text, 0.5);
   z-index: 100;
 
   &__content {
-    max-width: 990px;
-    @include fixed();
+    @include media-xs {
+      width: 550px;
+      padding: 0 5px;
+    }
+
+    @include media-sm {
+      width: 730px;
+      padding: 0 15px;
+    }
+
+    @include media-md {
+      //upd
+      width: 850px;
+    }
+
+    @include media-lg {
+      width: 1130px;
+    }
+
+    @include media-xl {
+      width: 1300px;
+    }
+
+    @include media-xxl {
+      width: 1510px;
+    }
+
     @include flex();
-    width: 100%
+    width: 1212px;
   }
 
   &__logo {
-    @include flex($ai: center, $jc: space-around);
-    width: 65px;
-    height: 55px;
-
-    svg {
-    transform: scale(10%);
-      overflow: visible;
+    @include font($ff: $f-main, $fs: 16px);
+    color: $c-brand;
+    h3{
+      margin-bottom: 0px;
     }
   }
 
-  &__menu {
+  &__menu { 
     margin-left: auto;
-    padding-right: 50px;
+    margin-right: 16px;
+    width:auto;
+    border-right: 1px solid $c-grey;
   }
 
   &__avatar {
@@ -37,12 +62,13 @@
       border-radius: 50%;
     }
   }
-  &__login{
-    margin-left: 16px;
-    @include flex()
+  &__login {
+    margin-left: 32px;
+    @include flex();
+    grid-gap: 24px;
   }
 
-  &__user{
-    margin-right: 24px;
+  &__user {
+    @include font($fs: 15px, $fw: 500);
   }
 }

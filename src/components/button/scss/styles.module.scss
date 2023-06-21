@@ -1,0 +1,58 @@
+.button {
+  @include flex($jc: center, $ai: center);
+  @include font($fs: 15px);
+  background-color: $c-background;
+  width: 100%;
+  padding: 10px 5px;
+  border-radius: 3px;
+  border: none;
+  transition: 0.2s ease-in-out background-color;
+
+  color: $c-black;
+  cursor: pointer;
+
+  &--brand {
+    background-color: $c-brand;
+    color: $c-white;
+
+    &:hover{
+      background-color: $c-brand-dark;
+    }
+  }
+
+  &--empty {
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid $c-black;
+    color: $c-brand;
+
+    &:hover {
+      background-color: $c-background;
+    }
+  }
+  &--wide{
+    width:300px
+  }
+
+  &--md {
+    height: 36px;
+    width: 160px;
+  }
+
+  &--sm{
+    height: 36px;
+    width: 100px;
+  }
+
+  &--xs {
+    height: 24px;
+    width: 24px;
+    svg{
+      width: 16px;
+      height: 16px
+    }
+  }
+
+  &--noBorder{
+    border: none
+  }
+}

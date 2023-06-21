@@ -1,10 +1,12 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React from 'react'
+import Layout from '@/components/layout/layout'
+import MainPage from '@/modules/main-page/main-page'
 
-const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Index() {
   return (
-    
+    <Layout>
+      <MainPage/>
+    </Layout>
   )
 }

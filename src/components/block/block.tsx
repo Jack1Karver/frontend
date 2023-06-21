@@ -1,26 +1,36 @@
-import { ReactNode } from 'react';
-
-import styles from './scss/block.module.scss';
+import React, { ReactNode } from 'react';
+import styles from 'src/components/block/scss/block.module.scss';
+import Container from '../container/container';
 
 type BlockPropTypes = {
   children: ReactNode;
-  mobWide?: boolean;
-  mod?: 'sm' | 'flex' | 'md' | 'lg';
-  type?: 'divided' | 'wide';
-  height?: boolean;
+  bg: 'light' | 'dark' | 'brand' | 'purple' | 'blue' | string;
+  borders?: boolean;
+  slider?: boolean;
+  className?: string;
+  containerMod?: 'sm' | 'flex' | 'md' | 'lg';
+  modifier?: 'tabs' | 'border-bottom' | 'tabs-linear';
+  zIndex?: number;
   first?: boolean;
+  paddings?: 'pt-0' | 'pb-sm' | 'p-0' | 'pb-0';
+  id?: string;
 };
 
-const Block = ({ children, mobWide, mod, type, height, first }: BlockPropTypes) => {
+export default function Block(props: BlockPropTypes): JSX.Element {
   return (
-    <div
-      className={`${styles.block} ${height ? styles['block--height'] : ''}  ${first ? styles['block--first'] : ''} ${
-        mod ? styles[`block--${mod}`] : ''
-      } ${type ? styles[`block--${type}`] : ''} ${mobWide ? styles['block--mob-p-0'] : ''}`}
+    <section
+      className={`${styles.block} ${styles['block--' + props.bg]}
+       ${props.borders ? styles['block--bordered'] : ''} ${
+        props.paddings ? styles['block--' + props.paddings] : ''
+      } ${props.className ? styles[props.className] : ''}  ${
+        props.modifier ? styles[`block--${props.modifier}`] : ''
+      } ${props.first ? styles['block--first'] : ''}`}
+      style={{ zIndex: props.zIndex }}
+      id={props.id}
     >
-      {children}
-    </div>
+      <Container mobWide={props.slider} mod={props.containerMod}>
+        {props.children}
+      </Container>
+    </section>
   );
-};
-
-export default Block;
+}

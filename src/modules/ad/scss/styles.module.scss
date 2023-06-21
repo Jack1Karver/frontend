@@ -1,0 +1,117 @@
+.ad {
+    display: grid;
+    grid-template-areas: 'photos description' 'about about';  
+    grid-template-columns: 2fr 1.2fr;  
+    gap:48px;
+
+  &__photo {
+    margin-bottom: 8px;
+    height: 550px;
+    width: 770px;
+    
+    img {
+      max-width: 770px;
+      max-height: 520px;
+    }
+  }
+
+  &__photos {
+    grid-area: photos;
+  }
+
+  &__small_photos {
+    @include flex($fd: row, $ai: stretch);
+    gap: 4px;
+    width: 100%;
+  }
+
+  &__small_photo {
+    @include flex();
+    width: fit-content;
+    position: relative;
+    background: rgba(0, 0, 0, 0.1);
+    img {
+      max-width: 130px;
+    }
+
+    &:after {
+      @include absolute($t: 0, $r: 0, $b: 0, $l: 0);
+    pointer-events: none;
+      background: rgba(0, 0, 0, 0.4);
+      width: auto;
+      content: ' ';
+      transition: background 0.2s ease;
+    }
+
+    &:hover {
+      &:after {
+        background: transparent;
+      }
+    }
+    &--active{      
+      &:after{
+        background: transparent;
+      }
+    }
+  }
+  &__price{
+    @include flex($fd: column, $ai: flex-end, $jc: center);
+    margin: 24px 0;
+    width:100%;
+    button{
+        width: 100%
+    }
+  }
+
+  &__description{
+    @include flex($fd: column, $ai: flex-start, $jc: flex-start);
+    width:auto;
+    grid-area: description;
+  }
+
+  &__params{
+    width:100%
+  }
+
+  &__parameter{
+    @include flex($fd: row, $jc: space-between);
+    text-transform: capitalize;
+    padding: 10px 0 2px;  
+    border-bottom: 1px solid $c-grey;
+    
+    &--name{
+        color: $c-disabled-text;
+    }
+  }
+
+  &__about{
+    grid-area: about;
+    @include flex($fd: column, $ai: flex-start);
+    gap: 40px;
+    width: 100%;
+  }
+  &__about_parameter{
+    @include flex();
+
+    &--name{
+        color: $c-disabled-text;
+        width:120px;
+    }
+  
+  }
+
+  &__owner { 
+    transition: border 0.3s ease;    
+    color: $c-black;
+
+    &:hover{
+        border-bottom: 1px solid $c-black;
+        margin-bottom: -1px;
+    }    
+  }
+
+  &__owner_block{
+    width: 100%;
+    color: $c-disabled-text;
+  }
+}

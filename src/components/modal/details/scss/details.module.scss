@@ -1,0 +1,52 @@
+.details {
+  &:not(:first-child) {
+    margin-top: 15px;
+  }
+
+  &__item {
+    @include flex($ai: flex-start, $jc: space-between);
+    @include font($fs: 14px, $lh: 1.6);
+
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+  }
+
+  &__title {
+    color: $c-disabled-text;
+    padding-right: 20px;
+
+    &--reverse {
+      color: $c-black;
+      font-weight: 600;
+    }
+
+    &--error {
+      color: $c-error;
+    }
+  }
+
+  &__value {
+    text-align: right;
+    word-break: break-word;
+    @include flex($fw: wrap, $jc: flex-end);
+
+    b {
+      font-weight: 600;
+    }
+
+    span {
+      margin-left: 4px;
+    }
+
+    &--reverse {
+      font-weight: normal;
+      color: $c-disabled-text;
+    }
+
+    &--monochrome {
+      font-weight: normal;
+      color: $c-disabled-text;
+    }
+  }
+}

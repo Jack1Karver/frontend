@@ -1,39 +1,54 @@
 import Link from 'next/link';
 import styles from './scss/header.module.scss';
-import Menu from '../menu/menu';
 import { observer } from 'mobx-react';
-import { useMemo } from 'react';
-import UserAuthorizedStore from '../../stores/user.authorized.store';
-import Button from '../button/button';
+import { COMMON_LABELS } from '@/config/labels.config';
 import Router from 'next/router';
-import { COMMON_LABELS } from '../../config/labels.config';
+import Button from '../button/button';
+import userStore from '@/stores/user-store';
+import Menu from '../menu/menu';
+import { ExtensionWalletAuthRequests } from '@/requests/extension-wallet-auth.request';
+import { IAuthorizedUser} from '@/interfaces/user.interface';
+import { useEffect, useState } from 'react';
 
+type HeaderProps = {
+  user: IAuthorizedUser | null
+}
 
+const Header = observer(({user}:HeaderProps) => {
+  const [showLink, setShowLink] = useState(false)
 
-const Header = observer(() => {
-  const { userAuthorized, logout } = useMemo(() => new UserAuthorizedStore(), []);
+   useEffect(()=>{
+    if(user){
+      setShowLink(true)
+    }
+  }, [user])
+
+  const logout = async () => {
+    await ExtensionWalletAuthRequests.logout();
+    Router.reload();
+  };
 
   return (
     <header className={styles.header}>
       <div className={styles.header__content}>
-        <Link href="/">
-          <a className={styles.header__logo}>
-            <h1>Book2Book</h1>
-          </a>
+        <Link className={styles.header__logo} href="/">
+          <h3>Drivefy</h3>
         </Link>
         <div className={styles.header__menu}>
-          <Menu user={userAuthorized}/>
+          <Menu />
         </div>
+        <Button size={'md'} mod={'brand'} onClick={() => Router.push('/create')} content={'Create offer'} />
         <div className={styles.header__login}>
-          {userAuthorized ? (
+         
+          {!showLink ? (
             <>
-              <Link href={{ pathname:'/profile/[userName]', query:{ userName: `${userAuthorized.userName}` } }}>
-                <a className={styles.header__user}>{userAuthorized.userName}</a>
-              </Link>
-              <Button size={'xs'} onClick={logout} content={COMMON_LABELS.logout} />
+            <Button size={'sm'} onClick={() => Router.push('/signin')} content={COMMON_LABELS.login} />
             </>
           ) : (
-            <Button size={'xs'} onClick={() => Router.push('/login')} content={COMMON_LABELS.login} />
+            <>
+              <Link href={{ pathname:'/user/[slug]', query:{ slug: `${user!.slug}`} }} className={styles.header__user}>{user!.name}</Link>
+              <Button size={'sm'} onClick={logout} content={COMMON_LABELS.logout} />
+            </>
           )}
         </div>
       </div>

@@ -1,0 +1,92 @@
+.loader {
+
+  &__icon {
+    width: 44px;
+    height: 44px;
+    transform-origin: center;
+
+    svg path {
+      display: none;
+    }
+
+    &--animation {
+      animation: spin .7s linear infinite;
+
+      svg path {
+        display: block;
+      }
+    }
+
+    &--xs {
+      width: 36px;
+      height: 36px;
+    }
+
+    &--xxs {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__dots {
+    span {
+      height: 5px;
+      width: 5px;
+      border-radius: 50%;
+      background-color: $c-dark;
+      display: inline-block;
+      animation-name: loadingDots;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+
+      &:not(:last-child) {
+        margin-right: 3px;
+      }
+
+      &:nth-child(2) {
+        animation-delay: 0.4s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.8s;
+      }
+    }
+
+    &--light {
+      span {
+        background: $c-black;
+      }
+    }
+
+    &--dark {
+      span {
+        background: $c-white;
+      }
+    }
+
+    &--height {
+      height: 38px;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loadingDots {
+  40% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}

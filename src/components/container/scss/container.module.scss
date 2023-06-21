@@ -1,0 +1,124 @@
+.container {
+  width: 100%;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @include media-xs {
+    width: 550px;
+    padding: 0 5px;
+  }
+
+  @include media-sm {
+    width: 730px;
+    padding: 0 15px;
+  }
+
+  @include media-md {
+    //upd
+    width: 850px;
+  }
+
+  @include media-lg {
+    width: 1130px;
+  }
+
+  @include media-xl {
+    width: 1300px;
+  }
+
+  @include media-xxl {
+    width: 1510px;
+  }
+
+  &--flex {
+    @include flex($fd: column, $ai: stretch);
+  }
+
+  &--mob-p-0 {
+    @media (max-width: 767px) {
+      padding: 0;
+      //margin: 0;
+      width: 540px;
+    }
+
+    @media (max-width: ($v-xs - 1px)) {
+      width: 100%;
+    }
+  }
+
+  &--height {
+    height: 100%;
+  }
+
+  &--divided,
+  &--divided-wide {
+    width: 100%;
+    padding: 0;
+
+    @include media-lg {
+      width: 970px;
+      padding: 0 20px;
+    }
+  }
+
+  &--divided-wide {
+    @include media-lg {
+      width: 1140px;
+    }
+
+    @include media-xl {
+      width: 1220px;
+    }
+  }
+
+  &--sm {
+    @include media-lg {
+      width: 980px;
+      padding: 0 20px;
+    }
+  }
+
+  &--md {
+
+    @include media-xs {
+      width: 450px;
+      padding: 0 5px;
+    }
+
+    @include media-sm {
+      width: 550px;
+      padding: 0 15px;
+    }
+
+    @include media-md {
+      //upd
+      width: 730px;
+    }
+
+    @include media-lg {
+      width: 850px;
+    }
+
+    @include media-xl {
+      width: 1010px;
+    }
+
+    @include media-xxl {
+      width: 1220px;
+      padding: 0 20px;
+    }
+  }
+
+  &--lg {
+
+    @include media-xl {
+      width: 1130px;
+    }
+
+    @include media-xxl {
+      width: 1220px;
+      padding: 0 20px;
+    }
+  }
+}
